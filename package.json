@@ -1,0 +1,536 @@
+{
+    "name": "sqldm-performance-insights",
+    "displayName": "IDERA SQL DM Performance Insights (Preview)",
+    "description": "SQL Diagnostic Manager performance insights dashboard",
+    "icon": "icon.png",
+    "version": "0.3.3",
+    "publisher": "IDERA",
+    "engines": {
+        "vscode": "^1.27.0",
+        "sqlops": "*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/IderaInc/Idera-Azure-Data-Studio-For-DM"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "idera.product.resources",
+                "title": "IDERA Database Management Resources"
+            },
+            {
+                "command": "idera.help",
+                "title": "IDERA Community Support"
+            }
+        ],
+        "dashboard.tabs": [
+            {
+                "id": "sqldm-performance-insights",
+                "title": "IDERA SQL DM Performance Insights",
+                "description": "Show key performance indicators for SQL Server using IDERA SQL DM",
+                "container": {
+                    "nav-section": [
+                        {
+                            "id": "server",
+                            "title": "Servers",
+                            "icon": {
+                                "light": "./out/images/server_light.svg",
+                                "dark": "./out/images/server_dark.svg"
+                            },
+                            "container": {
+                                "server-container": {}
+                            }
+                        },
+                        {
+                            "id": "sessions",
+                            "title": "Sessions",
+                            "icon": {
+                                "light": "./out/images/sessions_light.svg",
+                                "dark": "./out/images/sessions_dark.svg"
+                            },
+                            "container": {
+                                "sessions-container": {}
+                            }
+                        },
+                        {
+                            "id": "databases",
+                            "title": "Databases",
+                            "icon": {
+                                "light": "./out/images/databases_light.svg",
+                                "dark": "./out/images/databases_dark.svg"
+                            },
+                            "container": {
+                                "databases-container": {}
+                            }
+                        },
+                        {
+                            "id": "queries",
+                            "title": "Queries",
+                            "icon": {
+                                "light": "./out/images/queries_light.svg",
+                                "dark": "./out/images/queries_dark.svg"
+                            },
+                            "container": {
+                                "queries-container": {}
+                            }
+                        },
+                        {
+                            "id": "help",
+                            "title": "Help",
+                            "icon": {
+                                "light": "./out/images/help_light.svg",
+                                "dark": "./out/images/help_dark.svg"
+                            },
+                            "container": {
+                                "help-container": {}
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "dashboard.insights": [
+            {
+                "id": "server-stats-lastcollected",
+                "contrib": {
+                    "queryFile": "./out/sql/serverStatsLastCollected.sql",
+                    "type": {
+                        "count": {}
+                    }
+                }
+            },
+            {
+                "id": "server-cpu",
+                "contrib": {
+                    "queryFile": "./out/sql/serverCPU.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "columnsAsLabels": true,
+                            "xAxisLabel": "Percent"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "server-used-memory",
+                "contrib": {
+                    "queryFile": "./out/sql/serverUsedMemory.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "xAxisLabel": "MB"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "server-network-activity",
+                "contrib": {
+                    "queryFile": "./out/sql/serverNetworkActivity.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "xAxisLabel": "Count"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "server-io-activity",
+                "contrib": {
+                    "queryFile": "./out/sql/serverIOActivity.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "xAxisLabel": "Percent"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "sessions-summary",
+                "contrib": {
+                    "queryFile": "./out/sql/sessionsSummary.sql",
+                    "type": {
+                        "table": null
+                    }
+                }
+            },
+            {
+                "id": "db-instance-reads-stats",
+                "contrib": {
+                    "queryFile": "./out/sql/dbInstanceStatisticsReads.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "xAxisLabel": "Per Second"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "db-instance-writes-stats",
+                "contrib": {
+                    "queryFile": "./out/sql/dbInstanceStatisticsWrites.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "xAxisLabel": "Per Second"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "db-instance-transactions-stats",
+                "contrib": {
+                    "queryFile": "./out/sql/dbInstanceStatisticsTransactions.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "xAxisLabel": "Per Second"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "db-instance-log-stats",
+                "contrib": {
+                    "queryFile": "./out/sql/dbInstanceStatisticsLog.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "xAxisLabel": "Per Second"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "db-summary-stats",
+                "contrib": {
+                    "queryFile": "./out/sql/dbSummaryStatistics.sql",
+                    "type": {
+                        "table": null
+                    }
+                }
+            },
+            {
+                "id": "queries-get-waits-instance",
+                "contrib": {
+                    "queryFile": "./out/sql/queriesGetWaitsByInstance.sql",
+                    "type": {
+                        "horizontalBar": {
+                            "dataDirection": "vertical",
+                            "dataType": "number",
+                            "legendPosition": "bottom",
+                            "labelFirstColumn": false,
+                            "xAxisLabel": "Seconds"
+                        }
+                    }
+                }
+            },
+            {
+                "id": "queries-get-waits-detail-instance",
+                "contrib": {
+                    "queryFile": "./out/sql/queriesGetWaitsDetailByInstance.sql",
+                    "type": {
+                        "table": null
+                    }
+                }
+            },
+            {
+                "id": "queries-get-top-instances-by-query",
+                "contrib": {
+                    "queryFile": "./out/sql/queriesGetTopInstancesByQueries.sql",
+                    "type": {
+                        "pie": {
+                            "dataType": "number",
+                            "legendPosition": "right"
+                        }
+                    },
+                    "details": {
+                        "queryFile": "./out/sql/queriesGetTopInstancesByQueriesItemDetail.sql",
+                        "label": "SQL Instance",
+                        "value": "# of Queries"
+                    }
+                }
+            },
+            {
+                "id": "queries-get-top-instances-by-query-details",
+                "contrib": {
+                    "queryFile": "./out/sql/queriesGetTopInstancesByQueriesDetails.sql",
+                    "type": {
+                        "table": null
+                    }
+                }
+            },
+            {
+                "id": "queries-get-top-instances-by-query-duration",
+                "contrib": {
+                    "queryFile": "./out/sql/queriesGetTopInstancesByQueryDuration.sql",
+                    "type": {
+                        "table": null
+                    }
+                }
+            }
+        ],
+        "dashboard.containers": [
+            {
+                "id": "server-container",
+                "container": {
+                    "widgets-container": [
+                        {
+                            "name": "Server Statistics Data Collection",
+                            "gridItemConfig": {
+                                "sizex": 4,
+                                "sizey": 0
+                            },
+                            "widget": {
+                                "server-stats-lastcollected": {}
+                            }
+                        },
+                        {
+                            "name": "CPU Used (Top 5 Instances)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "server-cpu": {}
+                            }
+                        },
+                        {
+                            "name": "Memory Used (Top 5 Instances)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "server-used-memory": {}
+                            }
+                        },
+                        {
+                            "name": "Network Activity (Top 5 Instances)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "server-network-activity": {}
+                            }
+                        },
+                        {
+                            "name": "IO Activity (Top 5 Instances)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "server-io-activity": {}
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "sessions-container",
+                "container": {
+                    "widgets-container": [
+                        {
+                            "name": "Sessions Summary Averages (Hourly Interval)",
+                            "gridItemConfig": {
+                                "sizex": 4,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "sessions-summary": {}
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "databases-container",
+                "container": {
+                    "widgets-container": [
+                        {
+                            "name": "Database Statistics by Top 5 Instances (Reads)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "db-instance-reads-stats": {}
+                            }
+                        },
+                        {
+                            "name": "Database Statistics by Top 5 Instances (Writes)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "db-instance-writes-stats": {}
+                            }
+                        },
+                        {
+                            "name": "Database Statistics by Top 5 Instances (Transactions)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "db-instance-transactions-stats": {}
+                            }
+                        },
+                        {
+                            "name": "Database Statistics by Top 5 Instance (Log)",
+                            "gridItemConfig": {
+                                "sizex": 2,
+                                "sizey": 1
+                            },
+                            "widget": {
+                                "db-instance-log-stats": {}
+                            }
+                        },
+                        {
+                            "name": "Database Statistical Averages in Last 4 Hours",
+                            "gridItemConfig": {
+                                "sizex": 4,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "db-summary-stats": {}
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "queries-container",
+                "container": {
+                    "widgets-container": [
+                        {
+                            "name": "Average Wait Statistics by Top 10 Instances",
+                            "gridItemConfig": {
+                                "sizex": 4,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "queries-get-waits-instance": {}
+                            }
+                        },
+                        {
+                            "name": "Top Application Waits Statistics Detail by Instance",
+                            "gridItemConfig": {
+                                "sizex": 4,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "queries-get-waits-detail-instance": {}
+                            }
+                        },
+                        {
+                            "name": "Total Number of Queries",
+                            "gridItemConfig": {
+                                "sizex": 4,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "queries-get-top-instances-by-query": {}
+                            }
+                        },
+                        {
+                            "name": "Daily Number of Queries",
+                            "gridItemConfig": {
+                                "sizex": 4,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "queries-get-top-instances-by-query-details": {}
+                            }
+                        },
+                        {
+                            "name": "Top Query Duration (Last 24 days)",
+                            "gridItemConfig": {
+                                "sizex": 4,
+                                "sizey": 2
+                            },
+                            "widget": {
+                                "queries-get-top-instances-by-query-duration": {}
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "help-container",
+                "container": {
+                    "widgets-container": [
+                        {
+                            "name": "IDERA Resources",
+                            "widget": {
+                                "tasks-widget": [
+                                    "idera.product.resources",
+                                    "idera.help"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "snippets": []
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install && node ./node_modules/sqlops/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "sqlops": "github:anthonydresser/sqlops-extension-sqlops",
+        "tslint": "^5.8.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "openurl": "^1.1.1",
+        "vscode-nls": "^3.2.5"
+    }
+}
